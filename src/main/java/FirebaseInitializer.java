@@ -13,7 +13,10 @@ public class FirebaseInitializer {
 
     public void initialize() throws IOException {
         // Skapa en ström och behåll referensen
-        FileInputStream serviceAccount = new FileInputStream("src/main/resources/apikey.json");
+
+        String pathToCredentials = "src/main/resources/apikey.json";
+
+        FileInputStream serviceAccount = new FileInputStream(pathToCredentials);
 
         try {
             // Skapa FirebaseOptions
@@ -29,7 +32,7 @@ public class FirebaseInitializer {
 
             // Initiera Firestore
             db = FirestoreOptions.newBuilder()
-                    .setCredentials(GoogleCredentials.fromStream(new FileInputStream("src/main/resources/apikey.json")))
+                    .setCredentials(GoogleCredentials.fromStream(new FileInputStream(pathToCredentials)))
                     .setProjectId("it-security-e1539")
                     .build()
                     .getService();

@@ -16,10 +16,10 @@ public class MainApp {
             FirebaseClient firebaseClient = new FirebaseClient(db);
 
             // Skapa en ny användare
-            firebaseClient.createUser("user123", "John Doe", "johndoe@example.com", 30);
+            firebaseClient.createUser("user3", "Heisenberg", "heisenberg@example.com", 28);
 
             // Hämta och visa användardata
-            Map<String, Object> userData = firebaseClient.getUser("user123");
+            Map<String, Object> userData = firebaseClient.getUser("user2");
             System.out.println("User data: " + userData);
 
         } catch (Exception e) {
