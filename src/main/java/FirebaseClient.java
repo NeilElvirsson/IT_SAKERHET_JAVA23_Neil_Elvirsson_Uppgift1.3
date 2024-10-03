@@ -15,13 +15,11 @@ public class FirebaseClient {
         this.db = db;
     }
 
-    // Skapa en användare i Firestore
     public void createUser(String userId, String name, String password, String email, int age) throws Exception {
 
         String hashedPassword = PasswordHasher.hashPassword(password);
 
         Map<String, Object> user = new HashMap<>();
-        //user.put("userID", userId);
         user.put("name", name);
         user.put("password", hashedPassword);
         System.out.println("Hashed password: " + hashedPassword);
@@ -33,7 +31,6 @@ public class FirebaseClient {
         System.out.println("User created at: " + result.getUpdateTime());
     }
 
-    // Hämta en användare från Firestore
     public Map<String, Object> getUser(String userId) throws Exception {
         DocumentReference docRef = db.collection("users").document(userId);
         Map<String, Object> data = docRef.get().get().getData();
