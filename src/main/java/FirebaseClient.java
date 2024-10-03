@@ -16,9 +16,15 @@ public class FirebaseClient {
     }
 
     // Skapa en användare i Firestore
-    public void createUser(String userId, String name, String email, int age) throws Exception {
+    public void createUser(String userId, String name, String password, String email, int age) throws Exception {
+
+        String hashedPassword = PasswordHasher.hashPassword(password);
+
         Map<String, Object> user = new HashMap<>();
+        //user.put("userID", userId);
         user.put("name", name);
+        user.put("password", hashedPassword);
+        System.out.println("Hashed password: " + hashedPassword);
         user.put("email", email);
         user.put("age", age);
 
@@ -30,6 +36,19 @@ public class FirebaseClient {
     // Hämta en användare från Firestore
     public Map<String, Object> getUser(String userId) throws Exception {
         DocumentReference docRef = db.collection("users").document(userId);
-        return docRef.get().get().getData();
+        Map<String, Object> data = docRef.get().get().getData();
+        if(data == null) {
+            System.out.println("Ingen användare hittades");
+        } else if (data != null) {
+            data.remove("password");
+
+        }
+        return data;
+    }
+
+    public void deleteUser (String userId) throws Exception {
+        DocumentReference docRef = db.collection("users").document(userId);
+        docRef.delete().get();
+        System.out.println("User with ID: " + userId + " deleted!");
     }
 }
